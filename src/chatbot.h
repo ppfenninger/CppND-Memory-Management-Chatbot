@@ -31,11 +31,11 @@ public:
     //// STUDENT CODE
     ////
 
-    ChatBot(ChatBot const& otherChatBot); //copy constructor
-    ChatBot(ChatBot&& otherChatBot) noexcept; //move constructor
+    ChatBot(const ChatBot &source); //copy constructor
+    ChatBot(ChatBot &&source); //move constructor
 
-    ChatBot& operator=(ChatBot const& otherChatBot); // copy assignment
-    ChatBot& operator=(ChatBot&& otherChatBot) noexcept; // move assignment
+    ChatBot& operator=(const ChatBot &source); // copy assignment
+    ChatBot& operator=(ChatBot &&source); // move assignment
 
 
     ////

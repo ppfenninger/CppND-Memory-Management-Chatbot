@@ -45,16 +45,17 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
-ChatBot::ChatBot(ChatBot const& otherChatBot):
-    _image(otherChatBot._image),
-    _currentNode(otherChatBot._currentNode),
-    _rootNode(otherChatBot._rootNode),
-    _chatLogic(otherChatBot._chatLogic)
-{
+ChatBot::ChatBot(const ChatBot &otherChatBot){
     std::cout << "ChatBot Copy Constructor" << std::endl;
+    _image = new wxBitmap();
+   	*_image = *otherChatBot._image;
+  	_currentNode = otherChatBot._currentNode;
+    _rootNode = otherChatBot._rootNode;
+    _chatLogic = otherChatBot._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
 }
 
-ChatBot::ChatBot(ChatBot&& otherChatBot) noexcept
+ChatBot::ChatBot(ChatBot &&otherChatBot)
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
     _image = otherChatBot._image;
@@ -62,26 +63,41 @@ ChatBot::ChatBot(ChatBot&& otherChatBot) noexcept
     _rootNode = otherChatBot._rootNode;
     _chatLogic = otherChatBot._chatLogic;
     _chatLogic->SetChatbotHandle(this);
+  
+  	otherChatBot._image = NULL;
+    otherChatBot._currentNode = nullptr;
+    otherChatBot._rootNode = nullptr;
+    otherChatBot._chatLogic = nullptr;
 }
 
-ChatBot& ChatBot::operator=(ChatBot const& otherChatBot)
+ChatBot& ChatBot::operator=(const ChatBot &otherChatBot)
 {
     std::cout << "ChatBot Copy Assignment" << std::endl;
-    _image = otherChatBot._image;
-    _currentNode = otherChatBot._currentNode;
+  	if(this == &otherChatBot) { return *this; }
+    _image = new wxBitmap();
+   	*_image = *otherChatBot._image;
+  	_currentNode = otherChatBot._currentNode;
     _rootNode = otherChatBot._rootNode;
     _chatLogic = otherChatBot._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
     return *this;
 }
 
-ChatBot& ChatBot::operator=(ChatBot&& otherChatBot) noexcept
+ChatBot& ChatBot::operator=(ChatBot &&otherChatBot)
 {
     std::cout << "ChatBot Move Assignment" << std::endl;
+  	if(this == &otherChatBot) { return *this; }
+  
     _image = otherChatBot._image;
     _currentNode = otherChatBot._currentNode;
     _rootNode = otherChatBot._rootNode;
     _chatLogic = otherChatBot._chatLogic;
     _chatLogic->SetChatbotHandle(this);
+  
+  	otherChatBot._image = NULL;
+    otherChatBot._currentNode = nullptr;
+    otherChatBot._rootNode = nullptr;
+    otherChatBot._chatLogic = nullptr;
     return *this;
 }
 
